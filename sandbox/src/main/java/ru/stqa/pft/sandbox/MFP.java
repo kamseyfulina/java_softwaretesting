@@ -1,4 +1,6 @@
-public class MFP 
+package ru.stqa.pft.sandbox;
+
+public class MFP
 {
  public static void main(String[] args)
  {
