@@ -29,6 +29,10 @@ public class BaseHelper {
     click(locator);;
   }
 
+  protected void assertConfirmation() {
+    wd.switchTo().alert().accept();
+  }
+
   private boolean isElementPresent() {
     try {
       wd.findElement((By) wd);

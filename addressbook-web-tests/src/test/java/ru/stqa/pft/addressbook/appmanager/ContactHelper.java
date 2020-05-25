@@ -27,8 +27,25 @@ public class ContactHelper extends BaseHelper{
     selectByText(By.name("bday"),contactData.getBday());
     selectByText(By.name("bmonth"),contactData.getBmonth());
     type(By.name("byear"),contactData.getByear());
-    click(By.name("theform"));
+    //click(By.name("theform"));
   }
 
 
+  public void selectContact() {
+    click(By.name("selected[]"));
+  }
+
+  public void deleteContact() {
+    click(By.xpath("//input[@value='Delete']"));
+    assertConfirmation();
+  }
+
+  public void initContactModification() {
+    click(By.xpath("//img[@alt='Edit']"));
+
+  }
+
+  public void submitContactModification() {
+    click(By.xpath("(//input[@name='update'])[2]"));
+  }
 }
