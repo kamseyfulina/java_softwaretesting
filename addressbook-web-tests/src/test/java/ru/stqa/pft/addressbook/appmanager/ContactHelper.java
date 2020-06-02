@@ -56,4 +56,24 @@ public class ContactHelper extends BaseHelper {
   public void submitContactModification() {
     click(By.xpath("(//input[@name='update'])[2]"));
   }
+
+  public void goToCreateContactPage() {
+    click(By.linkText("add new"));
+  }
+
+  public void returnToHomePage() {
+    //данный клик используется для возврата на дом.страницу со страницы создания контакта
+    click(By.linkText("home page"));
+  }
+
+  public boolean isThereAContact() {
+    return isElementPresent(By.name("selected[]"));
+  }
+
+  public void createContact(ContactData contact) {
+    goToCreateContactPage();
+    fillContactForm(contact,true);
+    submitContactCreation();
+    returnToHomePage();
+  }
 }
