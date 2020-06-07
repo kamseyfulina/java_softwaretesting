@@ -76,4 +76,8 @@ public class ContactHelper extends BaseHelper {
     submitContactCreation();
     returnToHomePage();
   }
+
+  public int getGroupCount() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
 }
