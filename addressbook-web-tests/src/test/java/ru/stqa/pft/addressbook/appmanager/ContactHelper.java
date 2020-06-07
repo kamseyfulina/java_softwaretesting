@@ -39,8 +39,8 @@ public class ContactHelper extends BaseHelper {
   }
 
 
-  public void selectContact() {
-    click(By.name("selected[]"));
+  public void selectContact(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void deleteContact() {
@@ -77,7 +77,7 @@ public class ContactHelper extends BaseHelper {
     returnToHomePage();
   }
 
-  public int getGroupCount() {
+  public int getContactCount() {
     return wd.findElements(By.name("selected[]")).size();
   }
 }

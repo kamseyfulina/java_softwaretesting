@@ -9,9 +9,9 @@ public class ContactCreationTests extends TestBase {
   @Test
   public void testContactCreation() throws Exception {
     app.getNavigationHelper().gotoHomePage();
-    int before = app.getContactHelper().getGroupCount();
+    int before = app.getContactHelper().getContactCount();
     app.getContactHelper().createContact(new ContactData("Иван", "Иванович", "Иванов", "ivanov", "ST", "88435235412", "89503336699", "ivanov@testmail.ru", "26", "January", "1992","test"));
-    int after = app.getContactHelper().getGroupCount();
+    int after = app.getContactHelper().getContactCount();
     Assert.assertEquals(after,before+1);
 
   }
