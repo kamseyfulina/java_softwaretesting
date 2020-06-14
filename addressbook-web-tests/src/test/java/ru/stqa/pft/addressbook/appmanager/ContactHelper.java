@@ -42,7 +42,6 @@ public class ContactHelper extends BaseHelper {
 
   }
 
-
   public void selectContact(int index) {
     wd.findElements(By.name("selected[]")).get(index).click();
   }
@@ -52,8 +51,10 @@ public class ContactHelper extends BaseHelper {
     assertConfirmation();
   }
 
-  public void initContactModification() {
-    click(By.xpath("//img[@alt='Edit']"));
+  public void initContactModification(int index) {
+    //click(By.xpath("//img[@alt='Edit']"));
+    //click(By.xpath(String.format("//*[@id='maintable']/tbody/tr[%d]/td[8]/a/img", (index+1))));
+    click(By.xpath(String.format("//img[@alt='Edit'][%d]", index )));
 
   }
 
@@ -89,10 +90,11 @@ public class ContactHelper extends BaseHelper {
     List<ContactData> contacts = new ArrayList<ContactData>();
     List<WebElement> elements = wd.findElements(By.cssSelector("#maintable tr:not(:first-child)"));
     for (WebElement element:elements){
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
       List<WebElement> cells = element.findElements(By.tagName("td"));
       String lastname = cells.get(1).getText();
       String firstname = cells.get(2).getText();
-      ContactData contact = new ContactData(firstname,lastname);
+      ContactData contact = new ContactData(id,firstname,lastname);
       contacts.add(contact);
       }
     return contacts;
