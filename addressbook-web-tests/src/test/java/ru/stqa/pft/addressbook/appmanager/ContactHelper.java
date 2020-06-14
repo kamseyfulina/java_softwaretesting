@@ -30,9 +30,9 @@ public class ContactHelper extends BaseHelper {
     type(By.name("home"), contactData.getHome());
     type(By.name("mobile"), contactData.getMobile());
     type(By.name("email"), contactData.getEmail());
-    selectByText(By.name("bday"), contactData.getBday());
-    selectByText(By.name("bmonth"), contactData.getBmonth());
-    type(By.name("byear"), contactData.getByear());
+//    selectByText(By.name("bday"), contactData.getBday());
+//    selectByText(By.name("bmonth"), contactData.getBmonth());
+//    type(By.name("byear"), contactData.getByear());
 
     if (creation) {
       selectByText(By.name("new_group"), contactData.getGroup());
@@ -89,10 +89,12 @@ public class ContactHelper extends BaseHelper {
     List<ContactData> contacts = new ArrayList<ContactData>();
     List<WebElement> elements = wd.findElements(By.cssSelector("#maintable tr:not(:first-child)"));
     for (WebElement element:elements){
-      String name = element.getText();
-      ContactData contact = new ContactData(name,"","","","","","","","","","","");
+      List<WebElement> cells = element.findElements(By.tagName("td"));
+      String lastname = cells.get(1).getText();
+      String firstname = cells.get(2).getText();
+      ContactData contact = new ContactData(firstname,lastname);
       contacts.add(contact);
-    }
+      }
     return contacts;
+    }
   }
-}
