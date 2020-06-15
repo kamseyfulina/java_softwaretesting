@@ -52,9 +52,9 @@ public class ContactHelper extends BaseHelper {
   }
 
   public void initContactModification(int index) {
-    //click(By.xpath("//img[@alt='Edit']"));
-    //click(By.xpath(String.format("//*[@id='maintable']/tbody/tr[%d]/td[8]/a/img", (index+1))));
-    click(By.xpath(String.format("//img[@alt='Edit'][%d]", index )));
+    click(By.xpath(String.format("//*[@id='maintable']/tbody/tr[%d]/td[8]/a/img", index + 2)));
+    //прибавляю к index +2, так как индексация элементов tr начинается с 1
+    // и нужно сделать сдвиг на 1 позицию из-за заголовка
 
   }
 
@@ -77,7 +77,7 @@ public class ContactHelper extends BaseHelper {
 
   public void createContact(ContactData contact) {
     goToCreateContactPage();
-    fillContactForm(contact,true);
+    fillContactForm(contact, true);
     submitContactCreation();
     returnToHomePage();
   }
@@ -89,14 +89,14 @@ public class ContactHelper extends BaseHelper {
   public List<ContactData> getContactList() {
     List<ContactData> contacts = new ArrayList<ContactData>();
     List<WebElement> elements = wd.findElements(By.cssSelector("#maintable tr:not(:first-child)"));
-    for (WebElement element:elements){
+    for (WebElement element : elements) {
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
       List<WebElement> cells = element.findElements(By.tagName("td"));
       String lastname = cells.get(1).getText();
       String firstname = cells.get(2).getText();
-      ContactData contact = new ContactData(id,firstname,lastname);
+      ContactData contact = new ContactData(id, firstname, lastname);
       contacts.add(contact);
-      }
-    return contacts;
     }
+    return contacts;
   }
+}
