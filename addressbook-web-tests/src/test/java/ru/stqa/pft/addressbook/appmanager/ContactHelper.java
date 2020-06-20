@@ -9,7 +9,9 @@ import ru.stqa.pft.addressbook.model.ContactData;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends BaseHelper {
 
@@ -46,15 +48,17 @@ public class ContactHelper extends BaseHelper {
     wd.findElements(By.name("selected[]")).get(index).click();
   }
 
+  public void selectContactById(int id) {
+    wd.findElement(By.cssSelector("input[id='" +id + "']")).click();
+  }
+
   public void deleteContact() {
     click(By.xpath("//input[@value='Delete']"));
     assertConfirmation();
   }
 
-  public void initContactModification(int index) {
-    click(By.xpath(String.format("//*[@id='maintable']/tbody/tr[%d]/td[8]/a/img", index + 2)));
-    //прибавляю к index +2, так как индексация элементов tr начинается с 1
-    // и нужно сделать сдвиг на 1 позицию из-за заголовка
+  public void initContactModification(int id) {
+    click(By.cssSelector("a[href='edit.php?id=" + id + "']"));
 
   }
 
@@ -82,21 +86,21 @@ public class ContactHelper extends BaseHelper {
     returnToHomePage();
   }
 
-  public void modify(int index, ContactData contact) {
-    selectContact(index);
-    initContactModification(index);
+  public void modify(ContactData contact) {
+    selectContactById(contact.getId());
+    initContactModification(contact.getId());
     fillContactForm(contact,false);
     submitContactModification();
     returnToHomePage();
   }
 
-  public void delete(int index) {
-    selectContact(index);
+  public void delete(ContactData contact) {
+    selectContactById(contact.getId());
     deleteContact();
   }
 
-  public List<ContactData> list() {
-    List<ContactData> contacts = new ArrayList<ContactData>();
+  public Set<ContactData> all() {
+    Set<ContactData> contacts = new HashSet<>();
     List<WebElement> elements = wd.findElements(By.cssSelector("#maintable tr:not(:first-child)"));
     for (WebElement element : elements) {
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));

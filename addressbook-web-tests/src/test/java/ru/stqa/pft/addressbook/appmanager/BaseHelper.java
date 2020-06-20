@@ -31,7 +31,7 @@ public class BaseHelper {
   protected void selectByText(By locator, String text) {
     click(locator);
     new Select(wd.findElement(locator)).selectByVisibleText(text);
-    click(locator);;
+    click(locator);
   }
 
   protected void assertConfirmation() {
