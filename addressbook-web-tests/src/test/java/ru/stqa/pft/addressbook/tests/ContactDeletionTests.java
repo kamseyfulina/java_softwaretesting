@@ -21,7 +21,7 @@ public class ContactDeletionTests extends TestBase{
       app.goTo().groupPage();
       defaultNameGroup = app.group().defaultNameGroup();
       app.contact().create(new ContactData().withFirstname("Петр").withMiddlename("Иванович").withLastname("Иванов")
-              .withHome("88435235412").withMobile("89503336699").withEmail("ivanov@testmail.ru").withGroup(defaultNameGroup));
+              .withHome("88435235412").withMobile("89503336699").withWork("222222225566").withEmail("ivanov@testmail.ru").withGroup(defaultNameGroup));
     }
   }
 

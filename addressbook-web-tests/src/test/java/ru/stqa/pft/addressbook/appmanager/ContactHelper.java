@@ -30,7 +30,9 @@ public class ContactHelper extends BaseHelper {
     type(By.name("company"), contactData.getCompany());
     type(By.name("home"), contactData.getHome());
     type(By.name("mobile"), contactData.getMobile());
+    type(By.name("work"), contactData.getEmail());
     type(By.name("email"), contactData.getEmail());
+
 //    selectByText(By.name("bday"), contactData.getBday());
 //    selectByText(By.name("bmonth"), contactData.getBmonth());
 //    type(By.name("byear"), contactData.getByear());
@@ -56,9 +58,20 @@ public class ContactHelper extends BaseHelper {
     assertConfirmation();
   }
 
-  public void initContactModification(int id) {
+  public void initContactModificationById(int id) {
     click(By.cssSelector("a[href='edit.php?id=" + id + "']"));
 
+  }
+
+  public ContactData infoFromEditForm(ContactData contact) {
+    initContactModificationById(contact.getId());
+    String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
+    String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+    String home = wd.findElement(By.name("home")).getAttribute("value");
+    String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+    String work = wd.findElement(By.name("work")).getAttribute("value");
+    wd.navigate().back();
+    return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).withHome(home).withMobile(mobile).withWork(work);
   }
 
   public void submitContactModification() {
@@ -88,7 +101,7 @@ public class ContactHelper extends BaseHelper {
 
   public void modify(ContactData contact) {
     selectContactById(contact.getId());
-    initContactModification(contact.getId());
+    initContactModificationById(contact.getId());
     fillContactForm(contact,false);
     submitContactModification();
     contactCache = null;
@@ -118,9 +131,13 @@ public class ContactHelper extends BaseHelper {
       List<WebElement> cells = element.findElements(By.tagName("td"));
       String lastname = cells.get(1).getText();
       String firstname = cells.get(2).getText();
-      ContactData contact = new ContactData().withId(id).withFirstname(firstname).withLastname(lastname);
+      String[] phones = cells.get(5).getText().split("\n");
+      ContactData contact = new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
+              .withHome(phones[0]).withMobile(phones[1]).withWork(phones[2]);
       contactCache.add(contact);
     }
     return new Contacts(contactCache);
   }
+
+
 }
