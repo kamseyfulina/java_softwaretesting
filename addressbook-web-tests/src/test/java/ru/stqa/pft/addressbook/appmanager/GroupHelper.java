@@ -78,6 +78,20 @@ public class GroupHelper extends BaseHelper {
     return isElementPresent(By.name("selected[]"));
   }
 
+  public String defaultNameGroup() {
+    //метод используется для получения имени группы, которую можно указать на карточке создания контакта
+    String defaultNameGroup;
+    if (all().size() == 0) {
+      //если ни еще нет ни одной группы, создаем группу с именем "test1"
+      create(new GroupData().withName("test"));
+      return defaultNameGroup = "test";
+    }
+    else {
+      //иначе возьмем имя одной из существующих групп
+      return defaultNameGroup = all().iterator().next().getName();
+    }
+  }
+
   public int getGroupCount() {
     return wd.findElements(By.name("selected[]")).size();
   }
@@ -92,7 +106,5 @@ public class GroupHelper extends BaseHelper {
     }
     return groups;
   }
-
-
 
 }

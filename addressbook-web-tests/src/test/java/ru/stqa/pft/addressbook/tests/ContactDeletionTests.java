@@ -8,13 +8,19 @@ import java.util.Set;
 
 
 public class ContactDeletionTests extends TestBase{
+  String defaultNameGroup;
 
   @BeforeMethod
   public void ensurePreconditions() {
+    app.goTo().groupPage();
+    defaultNameGroup = app.group().defaultNameGroup();
+
     app.goTo().homePage();
     if (app.contact().all().size() == 0) {
+      app.goTo().groupPage();
+      defaultNameGroup = app.group().defaultNameGroup();
       app.contact().create(new ContactData().withFirstname("Петр").withMiddlename("Иванович").withLastname("Иванов")
-              .withHome("88435235412").withMobile("89503336699").withEmail("ivanov@testmail.ru").withGroup("test"));
+              .withHome("88435235412").withMobile("89503336699").withEmail("ivanov@testmail.ru").withGroup(defaultNameGroup));
     }
   }
 
