@@ -13,12 +13,8 @@ public class ContactDeletionTests extends TestBase{
 
   @BeforeMethod
   public void ensurePreconditions() {
-    app.goTo().groupPage();
-    defaultNameGroup = app.group().defaultNameGroup();
-
     app.goTo().homePage();
     if (app.contact().all().size() == 0) {
-      app.goTo().groupPage();
       defaultNameGroup = app.group().defaultNameGroup();
       app.contact().create(new ContactData().withFirstname("Петр").withMiddlename("Иванович").withLastname("Иванов")
               .withHome("88435235412").withMobile("89503336699").withWork("222222225566").withEmail("ivanov@testmail.ru").withGroup(defaultNameGroup));
