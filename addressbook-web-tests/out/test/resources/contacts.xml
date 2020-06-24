@@ -1,0 +1,26 @@
+<list>
+  <contact>
+    <firstname>Иван0</firstname>
+    <middlename>Иванович0</middlename>
+    <lastname>Иванов0</lastname>
+    <mobile>5235410</mobile>
+    <email>Ivan0@mail.ru</email>
+    <address>Г. Москва ул. Главная д. 0</address>
+  </contact>
+  <contact>
+    <firstname>Иван1</firstname>
+    <middlename>Иванович1</middlename>
+    <lastname>Иванов1</lastname>
+    <mobile>5235411</mobile>
+    <email>Ivan1@mail.ru</email>
+    <address>Г. Москва ул. Главная д. 1</address>
+  </contact>
+  <contact>
+    <firstname>Иван2</firstname>
+    <middlename>Иванович2</middlename>
+    <lastname>Иванов2</lastname>
+    <mobile>5235412</mobile>
+    <email>Ivan2@mail.ru</email>
+    <address>Г. Москва ул. Главная д. 2</address>
+  </contact>
+</list>

@@ -85,7 +85,7 @@ public class GroupHelper extends BaseHelper {
     //метод используется для получения имени группы, которую можно указать на карточке создания контакта
     String defaultNameGroup;
     if (all().size() == 0) {
-      //если ни еще нет ни одной группы, создаем группу с именем "test1"
+      //если ни еще нет ни одной группы, создаем группу с именем "test"
       create(new GroupData().withName("test"));
       return defaultNameGroup = "test";
     }

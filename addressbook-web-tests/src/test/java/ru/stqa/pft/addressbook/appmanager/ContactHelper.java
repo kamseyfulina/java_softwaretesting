@@ -31,7 +31,7 @@ public class ContactHelper extends BaseHelper {
     type(By.name("company"), contactData.getCompany());
     type(By.name("home"), contactData.getHome());
     type(By.name("mobile"), contactData.getMobile());
-    type(By.name("work"), contactData.getEmail());
+    type(By.name("work"), contactData.getWork());
     type(By.name("email"), contactData.getEmail());
     type(By.name("email2"), contactData.getEmail2());
     type(By.name("email3"), contactData.getEmail3());
@@ -43,7 +43,9 @@ public class ContactHelper extends BaseHelper {
 //    type(By.name("byear"), contactData.getByear());
 
     if (creation) {
-      selectByText(By.name("new_group"), contactData.getGroup());
+      if (contactData.getGroup() != null) {
+        selectByText(By.name("new_group"), contactData.getGroup());
+      }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
@@ -55,7 +57,7 @@ public class ContactHelper extends BaseHelper {
   }
 
   public void selectContactById(int id) {
-    wd.findElement(By.cssSelector("input[id='" +id + "']")).click();
+    wd.findElement(By.cssSelector("input[id='" + id + "']")).click();
   }
 
   public void deleteContact() {
@@ -113,7 +115,7 @@ public class ContactHelper extends BaseHelper {
   public void modify(ContactData contact) {
     selectContactById(contact.getId());
     initContactModificationById(contact.getId());
-    fillContactForm(contact,false);
+    fillContactForm(contact, false);
     submitContactModification();
     contactCache = null;
     returnToHomePage();
@@ -132,7 +134,7 @@ public class ContactHelper extends BaseHelper {
   private Contacts contactCache = null;
 
   public Contacts all() {
-    if(contactCache != null){
+    if (contactCache != null) {
       return new Contacts(contactCache);//возвращаем попию кеша
     }
     contactCache = new Contacts();
