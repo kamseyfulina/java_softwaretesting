@@ -13,7 +13,7 @@ import java.util.List;
 
 public class GroupDataGenerator {
 
-  @Parameter(names = "-с", description = "Group count")
+  @Parameter(names = "-c", description = "Group count")
   public  int count;
 
   @Parameter(names = "-f", description = "Target file")
