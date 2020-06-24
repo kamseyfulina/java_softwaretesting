@@ -1,0 +1,26 @@
+[
+  {
+    "firstname": "Иван0",
+    "middlename": "Иванович0",
+    "lastname": "Иванов0",
+    "mobile": "5235410",
+    "email": "Ivan0@mail.ru",
+    "address": "Г. Москва ул. Главная д. 0"
+  },
+  {
+    "firstname": "Иван1",
+    "middlename": "Иванович1",
+    "lastname": "Иванов1",
+    "mobile": "5235411",
+    "email": "Ivan1@mail.ru",
+    "address": "Г. Москва ул. Главная д. 1"
+  },
+  {
+    "firstname": "Иван2",
+    "middlename": "Иванович2",
+    "lastname": "Иванов2",
+    "mobile": "5235412",
+    "email": "Ivan2@mail.ru",
+    "address": "Г. Москва ул. Главная д. 2"
+  }
+]
