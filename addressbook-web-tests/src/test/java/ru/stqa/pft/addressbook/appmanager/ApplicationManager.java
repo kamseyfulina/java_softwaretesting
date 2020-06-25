@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import com.sun.deploy.panel.PropertyTreeModel;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -9,7 +8,6 @@ import org.openqa.selenium.remote.BrowserType;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
@@ -25,7 +23,7 @@ public class ApplicationManager {
   private GroupHelper groupHelper;
   private final String browser;
 
-  public ApplicationManager(String browser) throws IOException {
+  public ApplicationManager(String browser) {
     this.browser = browser;
     properties = new Properties();
   }
