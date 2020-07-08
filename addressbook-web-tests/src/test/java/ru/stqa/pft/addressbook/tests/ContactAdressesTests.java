@@ -11,8 +11,8 @@ public class ContactAdressesTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    app.goTo().homePage();
-    if (app.contact().all().size() == 0) {
+    if (app.db().contacts().size() == 0) {
+      app.goTo().homePage();
       app.contact().create(new ContactData().withFirstname("Петр").withMiddlename("Иванович").withLastname("Иванов")
               .withHome("88435235412").withMobile("89503336699")
               .withAddress("г. Москва ул Кутузовский проспект 23 корпус 1"));

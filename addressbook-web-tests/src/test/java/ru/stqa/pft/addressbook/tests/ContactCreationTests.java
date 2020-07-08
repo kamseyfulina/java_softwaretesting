@@ -13,7 +13,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,8 +25,8 @@ public class ContactCreationTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    app.goTo().groupPage();
-    defaultNameGroup = app.group().defaultNameGroup();
+   app.goTo().groupPage();
+   defaultNameGroup = app.group().defaultNameGroup();
   }
 
   @DataProvider
@@ -67,14 +66,14 @@ public class ContactCreationTests extends TestBase {
   @Test(dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact) throws Exception {
     app.goTo().homePage();
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     File photo = new File("src/test/resources/stru.jpg");
 //    ContactData contact = new ContactData().withFirstname("Петр").withMiddlename("Иванович").withLastname("Иванов")
 //            .withHome("88435235412").withMobile("89503336699").withWork("222222225566")
 //            .withEmail("ivanov@testmail.ru").withGroup(defaultNameGroup).withPhoto(photo);
-    app.contact().create(contact);
+    app.contact().create(contact.withGroup(defaultNameGroup));
     assertThat(app.contact().count(), equalTo(before.size() + 1));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(
             before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
 

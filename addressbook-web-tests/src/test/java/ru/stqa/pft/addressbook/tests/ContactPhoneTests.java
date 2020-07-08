@@ -19,11 +19,8 @@ public class ContactPhoneTests extends TestBase {
   public void ensurePreconditions() {
     app.goTo().groupPage();
     defaultNameGroup = app.group().defaultNameGroup();
-
-    app.goTo().homePage();
-    if (app.contact().all().size() == 0) {
-      app.goTo().groupPage();
-      defaultNameGroup = app.group().defaultNameGroup();
+    if (app.db().contacts().size() == 0) {
+      app.goTo().homePage();
       app.contact().create(new ContactData().withFirstname("Петр").withMiddlename("Иванович").withLastname("Иванов")
               .withHome("88435235412").withMobile("89503336699").withEmail("ivanov@testmail.ru").withGroup(defaultNameGroup));
     }

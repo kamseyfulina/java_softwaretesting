@@ -29,56 +29,62 @@ public class ContactData {
   private  String lastname;
 
   @Column(name="nickname")
-  private  String nickname;
+  private  String nickname = "";
 
   @Column(name="company")
-  private  String company;
+  private  String company = "";
 
   @Column(name="home")
   @Type(type ="text")
-  private  String home;
+  private  String home = "";
   @Expose
   @Column(name="mobile")
   @Type(type ="text")
-  private  String mobile;
+  private  String mobile = "";
 
   @Column(name="work")
   @Type(type ="text")
-  private  String work;
+  private  String work= "";
 
   @Transient
-  private  String allPhones;
+  private  String allPhones= "";
 
   @Transient
-  private  String allEmails;
+  private  String allEmails= "";
 
   @Expose
-  @Transient
+  @Column(name="email")
+  @Type(type ="text")
   private  String email;
   @Transient
-  private  String bday;
+  private  String bday= "";
   @Transient
-  private  String bmonth;
+  private  String bmonth= "";
   @Transient
-  private  String byear;
+  private  String byear= "";
 
   @Transient
-  private  String group;
+  private  String group= "";
   @Transient
-  private  String email2;
+  private  String email2= "";
   @Transient
-  private  String email3;
+  private  String email3 = "";
 
   @Expose
-  @Transient
-  private  String address;
+  @Column(name="address")
+  @Type(type ="text")
+  private  String address ;
 
   @Column(name="photo")
   @Type(type ="text")
   private String photo;
 
   public File getPhoto() {
-    return new File(photo);
+    if (photo != null) {
+      return new File(photo);
+    } else {
+      return null;
+    }
   }
 
   public ContactData withPhoto(File photo) {
@@ -279,6 +285,33 @@ public class ContactData {
     return group;
   }
 
+
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "id=" + id +
+            ", firstname='" + firstname + '\'' +
+            ", middlename='" + middlename + '\'' +
+            ", lastname='" + lastname + '\'' +
+            ", nickname='" + nickname + '\'' +
+            ", company='" + company + '\'' +
+            ", home='" + home + '\'' +
+            ", mobile='" + mobile + '\'' +
+            ", work='" + work + '\'' +
+            ", allPhones='" + allPhones + '\'' +
+            ", allEmails='" + allEmails + '\'' +
+            ", email='" + email + '\'' +
+            ", bday='" + bday + '\'' +
+            ", bmonth='" + bmonth + '\'' +
+            ", byear='" + byear + '\'' +
+            ", group='" + group + '\'' +
+            ", email2='" + email2 + '\'' +
+            ", email3='" + email3 + '\'' +
+            ", address='" + address + '\'' +
+            ", photo='" + photo + '\'' +
+            '}';
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -286,22 +319,29 @@ public class ContactData {
     ContactData that = (ContactData) o;
     return id == that.id &&
             Objects.equals(firstname, that.firstname) &&
-            Objects.equals(lastname, that.lastname);
+            Objects.equals(middlename, that.middlename) &&
+            Objects.equals(lastname, that.lastname) &&
+            Objects.equals(nickname, that.nickname) &&
+            Objects.equals(company, that.company) &&
+            Objects.equals(home, that.home) &&
+            Objects.equals(mobile, that.mobile) &&
+            Objects.equals(work, that.work) &&
+            Objects.equals(allPhones, that.allPhones) &&
+            Objects.equals(allEmails, that.allEmails) &&
+            Objects.equals(email, that.email) &&
+            Objects.equals(bday, that.bday) &&
+            Objects.equals(bmonth, that.bmonth) &&
+            Objects.equals(byear, that.byear) &&
+            Objects.equals(group, that.group) &&
+            Objects.equals(email2, that.email2) &&
+            Objects.equals(email3, that.email3) &&
+            Objects.equals(address, that.address) &&
+            Objects.equals(photo, that.photo);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstname, lastname);
+    return Objects.hash(id, firstname, middlename, lastname, nickname, company, home, mobile, work, allPhones, allEmails, email, bday, bmonth, byear, group, email2, email3, address, photo);
   }
-
-  @Override
-  public String toString() {
-    return "ContactData{" +
-            "id=" + id +
-            ", firstname='" + firstname + '\'' +
-            ", lastname='" + lastname + '\'' +
-            '}';
-  }
-
 
 }
