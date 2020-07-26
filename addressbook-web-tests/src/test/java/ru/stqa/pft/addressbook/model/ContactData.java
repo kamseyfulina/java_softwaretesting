@@ -332,16 +332,14 @@ public class ContactData {
             Objects.equals(bday, that.bday) &&
             Objects.equals(bmonth, that.bmonth) &&
             Objects.equals(byear, that.byear) &&
-            Objects.equals(group, that.group) &&
             Objects.equals(email2, that.email2) &&
             Objects.equals(email3, that.email3) &&
-            Objects.equals(address, that.address) &&
-            Objects.equals(photo, that.photo);
+            Objects.equals(address, that.address);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstname, middlename, lastname, nickname, company, home, mobile, work, allPhones, allEmails, email, bday, bmonth, byear, group, email2, email3, address, photo);
+    return Objects.hash(id, firstname, middlename, lastname, nickname, company, home, mobile, work, allPhones, allEmails, email, bday, bmonth, byear, email2, email3, address,photo);
   }
 
 }

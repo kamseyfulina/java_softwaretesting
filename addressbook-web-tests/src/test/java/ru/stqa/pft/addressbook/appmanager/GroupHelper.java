@@ -103,7 +103,7 @@ public class GroupHelper extends BaseHelper {
 
   public Groups all() {
     if(groupCache != null){
-      return new Groups(groupCache);//возвращаем попию кеша
+      return new Groups(groupCache);//возвращаем копию кеша
     }
     groupCache = new Groups();
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
