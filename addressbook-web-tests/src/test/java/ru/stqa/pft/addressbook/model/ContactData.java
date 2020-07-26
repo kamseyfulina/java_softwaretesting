@@ -6,7 +6,10 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
 @XStreamAlias("contact")
 @Entity
 @Table(name="addressbook")
@@ -64,8 +67,6 @@ public class ContactData {
   private  String byear= "";
 
   @Transient
-  private  String group= "";
-  @Transient
   private  String email2= "";
   @Transient
   private  String email3 = "";
@@ -78,6 +79,10 @@ public class ContactData {
   @Column(name="photo")
   @Type(type ="text")
   private String photo;
+
+  @ManyToMany(fetch = FetchType.EAGER)//для извлечения большого количество информации
+  @JoinTable(name="address_in_groups", joinColumns = @JoinColumn(name="id"),inverseJoinColumns = @JoinColumn(name="group_id") )
+  private final Set<GroupData> groups = new HashSet<GroupData>();
 
   public File getPhoto() {
     if (photo != null) {
@@ -196,11 +201,10 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withGroup(String group) {
-    this.group = group;
-    return this;
-  }
 
+  public Groups getGroups() {
+    return new Groups(groups);
+  }
 
   public ContactData(String firstname, String lastname){
     this.id = Integer.MAX_VALUE;
@@ -216,7 +220,7 @@ public class ContactData {
     this.email2 = null;
     this.email3 = null;
     this.address = null;
-    this.group = null;
+
   }
 
   public int getId() {
@@ -281,11 +285,6 @@ public class ContactData {
     return byear;
   }
 
-  public String getGroup () {
-    return group;
-  }
-
-
   @Override
   public String toString() {
     return "ContactData{" +
@@ -304,7 +303,6 @@ public class ContactData {
             ", bday='" + bday + '\'' +
             ", bmonth='" + bmonth + '\'' +
             ", byear='" + byear + '\'' +
-            ", group='" + group + '\'' +
             ", email2='" + email2 + '\'' +
             ", email3='" + email3 + '\'' +
             ", address='" + address + '\'' +
@@ -326,8 +324,6 @@ public class ContactData {
             Objects.equals(home, that.home) &&
             Objects.equals(mobile, that.mobile) &&
             Objects.equals(work, that.work) &&
-            Objects.equals(allPhones, that.allPhones) &&
-            Objects.equals(allEmails, that.allEmails) &&
             Objects.equals(email, that.email) &&
             Objects.equals(bday, that.bday) &&
             Objects.equals(bmonth, that.bmonth) &&
@@ -339,7 +335,7 @@ public class ContactData {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstname, middlename, lastname, nickname, company, home, mobile, work, allPhones, allEmails, email, bday, bmonth, byear, email2, email3, address,photo);
+    return Objects.hash(id, firstname, middlename, lastname, nickname, company, home, mobile, work, email, bday, bmonth, byear, email2, email3, address,photo);
   }
 
 }

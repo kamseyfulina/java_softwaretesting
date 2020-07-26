@@ -43,9 +43,9 @@ public class ContactHelper extends BaseHelper {
 //    type(By.name("byear"), contactData.getByear());
 
     if (creation) {
-      if (contactData.getGroup() != null) {
-        selectByText(By.name("new_group"), contactData.getGroup());
-      }
+//      if (contactData.getGroup() != null) {
+//        selectByText(By.name("new_group"), contactData.getGroup());
+//      }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
