@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 
 import java.util.List;
@@ -43,9 +44,10 @@ public class ContactHelper extends BaseHelper {
 //    type(By.name("byear"), contactData.getByear());
 
     if (creation) {
-//      if (contactData.getGroup() != null) {
-//        selectByText(By.name("new_group"), contactData.getGroup());
-//      }
+      if (contactData.getGroups().size() > 0) {
+        Assert.assertTrue(contactData.getGroups().size() == 1);
+        selectByText(By.name("new_group"), contactData.getGroups().iterator().next().getName());
+      }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
@@ -157,4 +159,15 @@ public class ContactHelper extends BaseHelper {
   }
 
 
+  public void addToGroup(ContactData contact, GroupData group) {
+    selectContactById(contact.getId());
+    selectByText(By.name("to_group"),group.getName());
+    wd.findElement(By.name("add")).click();
+  }
+
+  public void removeFromGroup(ContactData contact, GroupData group) {
+    selectByText(By.name("group"), group.getName());
+    selectContactById(contact.getId());
+    wd.findElement(By.name("remove")).click();
+  }
 }

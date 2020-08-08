@@ -82,7 +82,11 @@ public class ContactData {
 
   @ManyToMany(fetch = FetchType.EAGER)//для извлечения большого количество информации
   @JoinTable(name="address_in_groups", joinColumns = @JoinColumn(name="id"),inverseJoinColumns = @JoinColumn(name="group_id") )
-  private final Set<GroupData> groups = new HashSet<GroupData>();
+  private Set<GroupData> groups = new HashSet<GroupData>();
+
+  public Groups getGroups() {
+    return new Groups(groups);
+  }
 
   public File getPhoto() {
     if (photo != null) {
@@ -202,9 +206,10 @@ public class ContactData {
   }
 
 
-  public Groups getGroups() {
-    return new Groups(groups);
-  }
+  /**
+   * @return
+   */
+
 
   public ContactData(String firstname, String lastname){
     this.id = Integer.MAX_VALUE;
@@ -307,6 +312,7 @@ public class ContactData {
             ", email3='" + email3 + '\'' +
             ", address='" + address + '\'' +
             ", photo='" + photo + '\'' +
+            ", groups='" + groups + '\'' +
             '}';
   }
 
@@ -330,12 +336,17 @@ public class ContactData {
             Objects.equals(byear, that.byear) &&
             Objects.equals(email2, that.email2) &&
             Objects.equals(email3, that.email3) &&
-            Objects.equals(address, that.address);
+            Objects.equals(address, that.address) &&
+            Objects.equals(getGroups(), that.getGroups());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstname, middlename, lastname, nickname, company, home, mobile, work, email, bday, bmonth, byear, email2, email3, address,photo);
+    return Objects.hash(id, firstname, middlename, lastname, nickname, company, home, mobile, work, email, bday, bmonth, byear, email2, email3, address,photo,groups);
   }
 
+  public ContactData inGroup(GroupData group) {
+    groups.add(group);
+    return this;
+  }
 }
