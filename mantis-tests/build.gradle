@@ -8,6 +8,7 @@ dependencies{
     implementation 'org.testng:testng:7.1.0'
     implementation 'org.seleniumhq.selenium:selenium-java:4.0.0-alpha-6'
     implementation 'org.hamcrest:hamcrest:2.2'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.12'
 
 }
 
@@ -24,4 +25,12 @@ test {
     if(project.hasProperty('verifyUI')){
         systemProperty 'verifyUI', "${verifyUI}"
     }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+    systemProperty "file.encoding", "UTF-8"
 }
