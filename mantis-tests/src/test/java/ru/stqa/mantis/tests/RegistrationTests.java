@@ -7,16 +7,21 @@ import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.mantis.model.MailMessage;
 
 import javax.mail.MessagingException;
+import javax.xml.rpc.ServiceException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
 import java.util.List;
 
 import static org.testng.AssertJUnit.assertTrue;
 
 public class RegistrationTests extends TestBase {
 
-  //@BeforeMethod
-  public void startMailServer() {
-    app.mail().start();
+  @BeforeMethod
+  //0000001-id issue со статусом new
+  //0000002-id issue со статусом closed
+  public void isNeedToRunTest() throws RemoteException, ServiceException, MalformedURLException {
+    skipIfNotFixed(0000001);
   }
 
   @Test
