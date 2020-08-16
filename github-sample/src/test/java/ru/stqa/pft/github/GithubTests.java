@@ -15,5 +15,5 @@ public class GithubTests {
       System.out.println(new RepoCommit.Smart(commit).message());
       };
     }
-  
+
 }

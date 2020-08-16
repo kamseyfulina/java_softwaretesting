@@ -23,6 +23,14 @@ public class IssueHelper extends BaseHelper {
     }.getType());
   }
 
+  public static String getStateIssueById(Integer idIssue) throws IOException {
+    String json = getExecutor().execute(Get("https://bugify.stqa.ru/api/issues/" + idIssue.toString() + ".json"))
+            .returnContent().asString();
+    JsonElement parsed = JsonParser.parseString(json);
+    JsonElement issues = parsed.getAsJsonObject().get("issues");
+    return issues.getAsJsonArray().get(0).getAsJsonObject().get("state_name").getAsString();
+  }
+
 
   public static int createIssue(Issue newIssue) throws IOException {
     String json = getExecutor().execute(Post("https://bugify.stqa.ru/api/issues.json")
@@ -33,17 +41,10 @@ public class IssueHelper extends BaseHelper {
     return parsed.getAsJsonObject().get("issue_id").getAsInt();
   }
 
-  public static String getStateIssueById(Integer idIssue) throws IOException {
-    String json = getExecutor().execute(Get("https://bugify.stqa.ru/api/issues" + idIssue.toString() + ".json")
-            .bodyForm(new BasicNameValuePair("issue_id", idIssue.toString())))
-            .returnContent().asString();
-    JsonElement parsed = JsonParser.parseString(json);
-    return parsed.getAsJsonObject().get("state_name").getAsString();
-  }
-
   public static void updateStateIssueById(Integer idIssue, Integer idState) throws IOException {
     String json = getExecutor().execute(Post("https://bugify.stqa.ru/api/issues/" + idIssue.toString() + ".json")
-            .bodyForm(new BasicNameValuePair("state", idState.toString())))
+            .bodyForm(new BasicNameValuePair("issue[state]", idState.toString()),
+                    new BasicNameValuePair("method", "update")))
             .returnContent().asString();
     JsonElement parsed = JsonParser.parseString(json);
   }

@@ -22,12 +22,12 @@ public class RestTests extends TestBase {
 
     @BeforeMethod
     public void isNeedToRunTest() throws IOException {
-        //Создание issue и проставление статуса (3-Closed,1-In Progress)
+        //Создание "блокирующего" issue и проставление статуса (3-Closed,1-In Progress)
         Issue newIssue = new Issue()
                 .withSubject("Test issue")
                 .withDescription("New test issue");
         int issueId = IssueHelper.createIssue(newIssue);
-        IssueHelper.updateStateIssueById(issueId,3);
+        IssueHelper.updateStateIssueById(issueId,1);
         skipIfNotFixed(issueId);
     }
 
