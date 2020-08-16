@@ -7,47 +7,41 @@ import com.google.gson.reflect.TypeToken;
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.message.BasicNameValuePair;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
 import java.util.Set;
 
 import static org.apache.http.client.fluent.Request.Post;
 import static org.testng.Assert.*;
 
-public class RestTests {
+public class RestTests extends TestBase {
 
-    @Test
-    public void testCreateIssue() throws IOException {
-        Set<Issue> oldIssues = getIssues();
+    @BeforeMethod
+    public void isNeedToRunTest() throws IOException {
+        //Создание issue и проставление статуса (3-Closed,1-In Progress)
         Issue newIssue = new Issue()
                 .withSubject("Test issue")
                 .withDescription("New test issue");
-        int issueId = createIssue(newIssue);
-        Set<Issue> newIssues = getIssues();
+        int issueId = IssueHelper.createIssue(newIssue);
+        IssueHelper.updateStateIssueById(issueId,3);
+        skipIfNotFixed(issueId);
+    }
+
+    @Test
+    public void testCreateIssue() throws IOException {
+        Set<Issue> oldIssues = IssueHelper.getIssues();
+        Issue newIssue = new Issue()
+                .withSubject("Test issue")
+                .withDescription("New test issue");
+        int issueId = IssueHelper.createIssue(newIssue);
+        Set<Issue> newIssues = IssueHelper.getIssues();
         oldIssues.add(newIssue.withId(issueId));
         assertEquals(newIssues, oldIssues);
     }
 
-    private Set<Issue> getIssues() throws IOException {
-        String json = getExecutor().execute(Request.Get("https://bugify.stqa.ru/api/issues.json"))
-                .returnContent().asString();
-        JsonElement parsed = JsonParser.parseString(json);
-        JsonElement issues = parsed.getAsJsonObject().get("issues");
-        return new Gson().fromJson(issues, new TypeToken<Set<Issue>>() {
-        }.getType());
-    }
 
-    private Executor getExecutor() {
-        return Executor.newInstance().auth("288f44776e7bec4bf44fdfeb1e646490", "");
-    }
-
-    private int createIssue(Issue newIssue) throws IOException {
-        String json = getExecutor().execute(Request.Post("https://bugify.stqa.ru/api/issues.json")
-                .bodyForm(new BasicNameValuePair("subject", newIssue.getSubject()),
-                        new BasicNameValuePair("description", newIssue.getDescription())))
-                .returnContent().asString();
-        JsonElement parsed = JsonParser.parseString(json);
-        return parsed.getAsJsonObject().get("issue_id").getAsInt();
-    }
 }
