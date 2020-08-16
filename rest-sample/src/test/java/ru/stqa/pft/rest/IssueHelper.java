@@ -12,41 +12,39 @@ import java.util.Set;
 
 import static org.apache.http.client.fluent.Request.*;
 
-public class IssueHelper  extends BaseHelper{
+public class IssueHelper extends BaseHelper {
 
-    public static Set<Issue> getIssues() throws IOException {
-        String json = getExecutor().execute(Get("https://bugify.stqa.ru/api/issues.json"))
-                .returnContent().asString();
-        JsonElement parsed = JsonParser.parseString(json);
-        JsonElement issues = parsed.getAsJsonObject().get("issues");
-        return new Gson().fromJson(issues, new TypeToken<Set<Issue>>() {
-        }.getType());
-    }
+  public static Set<Issue> getIssues() throws IOException {
+    String json = getExecutor().execute(Get("https://bugify.stqa.ru/api/issues.json"))
+            .returnContent().asString();
+    JsonElement parsed = JsonParser.parseString(json);
+    JsonElement issues = parsed.getAsJsonObject().get("issues");
+    return new Gson().fromJson(issues, new TypeToken<Set<Issue>>() {
+    }.getType());
+  }
 
 
+  public static int createIssue(Issue newIssue) throws IOException {
+    String json = getExecutor().execute(Post("https://bugify.stqa.ru/api/issues.json")
+            .bodyForm(new BasicNameValuePair("subject", newIssue.getSubject()),
+                    new BasicNameValuePair("description", newIssue.getDescription())))
+            .returnContent().asString();
+    JsonElement parsed = JsonParser.parseString(json);
+    return parsed.getAsJsonObject().get("issue_id").getAsInt();
+  }
 
-    public static int createIssue(Issue newIssue) throws IOException {
-        String json = getExecutor().execute(Post("https://bugify.stqa.ru/api/issues.json")
-                .bodyForm(new BasicNameValuePair("subject", newIssue.getSubject()),
-                        new BasicNameValuePair("description", newIssue.getDescription()),
-        new BasicNameValuePair("state", newIssue.getDescription())))
-                .returnContent().asString();
-        JsonElement parsed = JsonParser.parseString(json);
-        return parsed.getAsJsonObject().get("issue_id").getAsInt();
-    }
+  public static String getStateIssueById(Integer idIssue) throws IOException {
+    String json = getExecutor().execute(Get("https://bugify.stqa.ru/api/issues" + idIssue.toString() + ".json")
+            .bodyForm(new BasicNameValuePair("issue_id", idIssue.toString())))
+            .returnContent().asString();
+    JsonElement parsed = JsonParser.parseString(json);
+    return parsed.getAsJsonObject().get("state_name").getAsString();
+  }
 
-    public static String getStateIssueById(Integer idIssue) throws IOException {
-        String json = getExecutor().execute(Get("https://bugify.stqa.ru/api/issues"  + idIssue.toString() + ".json")
-                .bodyForm(new BasicNameValuePair("issue_id", idIssue.toString())))
-                .returnContent().asString();
-        JsonElement parsed = JsonParser.parseString(json);
-        return parsed.getAsJsonObject().get("state_name").getAsString();
-    }
-
-    public static void updateStateIssueById(Integer idIssue,Integer idState) throws IOException {
-        String json = getExecutor().execute(Post("https://bugify.stqa.ru/api/issues/" + idIssue.toString() + ".json")
-                .bodyForm(new BasicNameValuePair("state", idState.toString())))
-                .returnContent().asString();
-        JsonElement parsed = JsonParser.parseString(json);
-    }
+  public static void updateStateIssueById(Integer idIssue, Integer idState) throws IOException {
+    String json = getExecutor().execute(Post("https://bugify.stqa.ru/api/issues/" + idIssue.toString() + ".json")
+            .bodyForm(new BasicNameValuePair("state", idState.toString())))
+            .returnContent().asString();
+    JsonElement parsed = JsonParser.parseString(json);
+  }
 }
