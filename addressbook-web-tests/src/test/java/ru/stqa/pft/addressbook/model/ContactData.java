@@ -336,13 +336,13 @@ public class ContactData {
             Objects.equals(byear, that.byear) &&
             Objects.equals(email2, that.email2) &&
             Objects.equals(email3, that.email3) &&
-            Objects.equals(address, that.address) &&
-            Objects.equals(getGroups(), that.getGroups());
+            Objects.equals(address, that.address);
+
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstname, middlename, lastname, nickname, company, home, mobile, work, email, bday, bmonth, byear, email2, email3, address,photo,groups);
+    return Objects.hash(id, firstname, middlename, lastname, nickname, company, home, mobile, work, email, bday, bmonth, byear, email2, email3, address);
   }
 
   public ContactData inGroup(GroupData group) {
